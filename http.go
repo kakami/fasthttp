@@ -91,6 +91,8 @@ type Response struct {
 	raddr net.Addr
 	// Local TCPAddr from concurrently net.Conn
 	laddr net.Addr
+
+	bodyLength int
 }
 
 // SetHost sets host for the request.
@@ -242,7 +244,7 @@ func (resp *Response) IsBodyStream() bool {
 //
 // Note that GET and HEAD requests cannot have body.
 //
-/// See also SetBodyStream.
+// / See also SetBodyStream.
 func (req *Request) SetBodyStreamWriter(sw StreamWriter) {
 	sr := NewStreamReader(sw)
 	req.SetBodyStream(sr, -1)

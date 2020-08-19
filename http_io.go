@@ -265,10 +265,14 @@ func (resp *Response) doBodyCopy(r *bufio.Reader, maxBodySize int, w io.Writer) 
 	}
 
 	if !resp.mustSkipBody() {
-		_, err = readBodyCopy(r, resp.Header.ContentLength(), w)
+		resp.bodyLength, err = readBodyCopy(r, resp.Header.ContentLength(), w)
 		if err != nil {
 			return err
 		}
 	}
 	return nil
+}
+
+func (resp *Response) BodyLength() int {
+	return resp.bodyLength
 }
